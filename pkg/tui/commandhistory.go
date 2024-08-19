@@ -2,6 +2,7 @@ package tui
 
 import (
   "strings"
+  "github.com/charmbracelet/lipgloss"
 )
 
 const (
@@ -10,9 +11,17 @@ const (
 
 type CommandHistory struct {
   CommandTexts []CommandText
+  Height int
+  Width int
 }
 
 func (ch CommandHistory) View() string {
+  var borderStyle = lipgloss.NewStyle().
+    BorderStyle(lipgloss.RoundedBorder()).
+    BorderForeground(lipgloss.Color("63")).
+    Align(lipgloss.Left).
+    Width(ch.Width)
+
   var sb strings.Builder
 
   if len(ch.CommandTexts) > MAX_HISTORY {
@@ -26,5 +35,5 @@ func (ch CommandHistory) View() string {
     }
   }
 
-  return sb.String()
+  return borderStyle.Render(sb.String())
 }

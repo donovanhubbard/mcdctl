@@ -22,7 +22,7 @@ func main() {
     os.Exit(1)
 	}
 
-	p := tea.NewProgram(tui.NewModel(socketAddress))
+	p := tea.NewProgram(tui.NewModel(socketAddress), tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
 		log.Fatal(err)
 	}
