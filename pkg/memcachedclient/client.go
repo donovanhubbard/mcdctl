@@ -75,7 +75,7 @@ func (c *Client) SendCommand(text string) (string,error) {
       utils.Sugar.Error(fmt.Sprintf("Received error from memcached: '%s'",errorText))
       return "", errors.New(errorText)
     }
-    if strings.HasPrefix(line, "END") || strings.HasPrefix(line, "STORED") || strings.HasPrefix(line,"DELETED") || strings.HasPrefix("OK"){
+    if strings.HasPrefix(line, "END") || strings.HasPrefix(line, "STORED") || strings.HasPrefix(line,"DELETED") || strings.HasPrefix(line,"OK"){
       text := sb.String()
       utils.Sugar.Debug(fmt.Sprintf("before trim %s",text))
       responseText := strings.TrimSpace(text)
