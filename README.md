@@ -13,3 +13,5 @@ A memcached TUI
 * press up to repeat the last command 
 * Scroll back to see previous commands
 * Delete text once there are too many lines in the command history
+* ~~Create a makefile~~
+* gracefully close the memcached connection
