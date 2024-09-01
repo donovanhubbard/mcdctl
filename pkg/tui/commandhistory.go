@@ -6,7 +6,7 @@ import (
 )
 
 const (
-  MAX_HISTORY = 3
+  MAX_HISTORY = 6
 )
 
 type CommandHistory struct {

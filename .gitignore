@@ -27,4 +27,4 @@ go.work.sum
 # ignore binaries
 cli
 mcdctl
-
+*.log

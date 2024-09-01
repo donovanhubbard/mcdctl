@@ -10,9 +10,12 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/donovanhubbard/mcdctl/pkg/memcachedclient"
 	"github.com/donovanhubbard/mcdctl/pkg/tui"
+	"github.com/donovanhubbard/mcdctl/pkg/utils"
 )
 
 func main() {
+  utils.InitializeLogger()
+  utils.Sugar.Info("Starting program")
 	socketAddress, err := getSocketAddress(os.Args[1:])
 
 	if err != nil {
