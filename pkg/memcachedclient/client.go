@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/donovanhubbard/mcdctl/pkg/utils"
-	// "github.com/charmbracelet/log"
 )
 
 const (
@@ -59,29 +58,31 @@ func (c *Client) SendCommand(text string) (string,error) {
   fmt.Fprintf(c.connection, "%s\r\n", text)
 
   var sb strings.Builder
+  var line string
+  var err error
   reader := bufio.NewReader(c.connection)
 
-  for {
-    utils.Sugar.Debug("Waiting on reader.ReadString()")
-    line, err := reader.ReadString('\n')
+  // flood the buffer
+  reader.Peek(1)
+
+  for reader.Buffered() > 0{
+    line, err = reader.ReadString('\n')
     utils.Sugar.Debug(fmt.Sprintf("Received non-error from memcached: '%s'",line))
     sb.WriteString(line)
     if err != nil {
       utils.Sugar.Error(fmt.Sprintf("Received connection error from memcached: '%s'",err.Error()))
       return "", err
     }
-    if strings.HasPrefix(line, "ERROR") || strings.HasPrefix(line,"NOT_FOUND") || strings.HasPrefix(line,"NOT_STORED") {
-      errorText := strings.TrimSpace(sb.String())
-      utils.Sugar.Error(fmt.Sprintf("Received error from memcached: '%s'",errorText))
-      return "", errors.New(errorText)
-    }
-    if strings.HasPrefix(line, "END") || strings.HasPrefix(line, "STORED") || strings.HasPrefix(line,"DELETED") || strings.HasPrefix(line,"OK"){
-      text := sb.String()
-      utils.Sugar.Debug(fmt.Sprintf("before trim %s",text))
-      responseText := strings.TrimSpace(text)
-      utils.Sugar.Debug(fmt.Sprintf("Received error from memcached: '%s'",responseText))
-      return responseText, nil
-    }
   }
 
+  if strings.HasPrefix(line, "ERROR") || strings.HasPrefix(line,"NOT_FOUND") || strings.HasPrefix(line,"NOT_STORED") {
+    errorText := strings.TrimSpace(sb.String())
+    utils.Sugar.Error(fmt.Sprintf("Received error message from memcached: '%s'",errorText))
+    return "", errors.New(errorText)
+  } else {
+    text := sb.String()
+    responseText := strings.TrimSpace(text)
+    utils.Sugar.Debug(fmt.Sprintf("Received message from memcached: '%s'",responseText))
+    return responseText, nil
+  }
 }
