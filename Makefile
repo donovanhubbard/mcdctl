@@ -5,3 +5,7 @@ build:
 .PHONY: run
 run:
 	go run cmd/cli/main.go localhost
+
+.PHONY: test
+test:
+	go test ./pkg/tui

@@ -1,4 +1,4 @@
-package utils
+package logging
 
 import (
 	"encoding/json"
@@ -9,8 +9,8 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-var Logger *zap.Logger
-var Sugar *zap.SugaredLogger
+var logger *zap.Logger
+var sugar *zap.SugaredLogger
 
 func getLogLevel() zapcore.Level {
 	defaultLevel := zapcore.DebugLevel
@@ -39,18 +39,17 @@ func getLogLevel() zapcore.Level {
 }
 
 func InitializeLogger() {
-
 	rawJSON := []byte(`{
-		"level": "fatal",
+		"level": "debug",
 		"encoding": "json",
-		"outputPaths": ["./mcdctl.log"],
-		"errorOutputPaths": ["./mcdctl.log"],
+		"outputPaths": ["/Users/donovan/code/mcdctl/mcdctl.log"],
+		"errorOutputPaths": ["/Users/donovan/code/mcdctl/mcdctl-err.log"],
 		"encoderConfig": {
 			"messageKey": "message",
 			"levelKey": "level",
 			"levelEncoder": "lowercase"
 		}
-	  }`)
+	}`)
 
 	var cfg zap.Config
 	if err := json.Unmarshal(rawJSON, &cfg); err != nil {
@@ -62,10 +61,45 @@ func InitializeLogger() {
 	cfg.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
 	cfg.EncoderConfig.TimeKey = "timestamp"
 
-	Logger := zap.Must(cfg.Build())
-	defer Logger.Sync()
+	logger := zap.Must(cfg.Build())
+	defer logger.Sync()
 
-	Sugar = Logger.Sugar()
+	sugar = logger.Sugar()
 
-	Sugar.Info("Logging initialized")
+	sugar.Info("Logging initialized")
+}
+
+func Debug(msg string) {
+	if sugar == nil {
+		InitializeLogger()
+	}
+	sugar.Debug(msg)
+}
+
+func Info(msg string) {
+	if sugar == nil {
+		InitializeLogger()
+	}
+	sugar.Info(msg)
+}
+
+func Warn(msg string) {
+	if sugar == nil {
+		InitializeLogger()
+	}
+	sugar.Warn(msg)
+}
+
+func Error(msg string) {
+	if sugar == nil {
+		InitializeLogger()
+	}
+	sugar.Error(msg)
+}
+
+func Panic(msg string) {
+	if sugar == nil {
+		InitializeLogger()
+	}
+	sugar.Panic(msg)
 }
