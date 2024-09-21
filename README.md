@@ -16,5 +16,5 @@ A memcached TUI
 * ~~Create a makefile~~
 * gracefully close the memcached connection
 * ~~Rename `util` package to something meaningful~~
-* get rid of the silly `pkg` folder
+* ~~get rid of the silly `pkg` folder~~
 * see if you can get some kind of intellisense

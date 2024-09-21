@@ -7,7 +7,7 @@ import (
 	"net"
 	"strings"
 
-	"github.com/donovanhubbard/mcdctl/pkg/logging"
+	"github.com/donovanhubbard/mcdctl/logging"
 )
 
 const (

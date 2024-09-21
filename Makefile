@@ -8,4 +8,4 @@ run:
 
 .PHONY: test
 test:
-	go test ./pkg/tui
+	go test ./tui

@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/donovanhubbard/mcdctl/pkg/memcachedclient"
 	"testing"
+
+	"github.com/donovanhubbard/mcdctl/memcachedclient"
 )
 
 func TestNoProgramArgumentsReturnsError(t *testing.T) {

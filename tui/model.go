@@ -10,8 +10,8 @@ import (
 
 	"github.com/charmbracelet/bubbles/cursor"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/donovanhubbard/mcdctl/pkg/logging"
-	"github.com/donovanhubbard/mcdctl/pkg/memcachedclient"
+	"github.com/donovanhubbard/mcdctl/logging"
+	"github.com/donovanhubbard/mcdctl/memcachedclient"
 )
 
 type Model struct {

@@ -9,9 +9,9 @@ import (
 	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/donovanhubbard/mcdctl/pkg/logging"
-	"github.com/donovanhubbard/mcdctl/pkg/memcachedclient"
-	"github.com/donovanhubbard/mcdctl/pkg/tui"
+	"github.com/donovanhubbard/mcdctl/logging"
+	"github.com/donovanhubbard/mcdctl/memcachedclient"
+	"github.com/donovanhubbard/mcdctl/tui"
 )
 
 func main() {
